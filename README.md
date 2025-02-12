@@ -49,7 +49,10 @@ Para rodar este projeto em sua máquina local, siga os passos abaixo:
     ```sh
     git clone https://github.com/GSOFelix/My-Notes
     ```
-cd my-notes
+    
+    ```sh
+    cd my-notes
+    ```
 
 2. Instalar as Dependências
 Execute o comando abaixo para instalar as dependências do projeto:
