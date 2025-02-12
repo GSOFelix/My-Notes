@@ -1,9 +1,16 @@
+import { INotas } from "@/interfaces/INota";
 import { StackNavigationProp } from "@react-navigation/stack"
 
 export type propsNavigationStack = {
     Home: undefined,
-    NoteDetails:{id:number},
-    NewNote:undefined
+    NewNote:undefined,
+    NoteDetails:{
+        nota:INotas
+    },
+    EditNote:{
+        nota:INotas
+    }
+    
   
 }
 

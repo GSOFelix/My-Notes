@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
 import { FontAwesome } from "@expo/vector-icons"
 import { LinearGradient } from 'expo-linear-gradient';
+import { degradeTelas } from '@/theme/colors';
+import { useFocusEffect } from '@react-navigation/native';
 export function SearchBar({acao}:{acao:(termo: string) => void}) {
     const [textoD,setTextoD] = useState('');
 
@@ -10,9 +12,18 @@ export function SearchBar({acao}:{acao:(termo: string) => void}) {
         acao(value);
     };
 
+    useFocusEffect(
+        useCallback(() => {
+          const reset = () => {
+           setTextoD('')
+          };
+          reset();
+        }, [])
+      )
+
     return (
         <LinearGradient
-            colors={['#6D51A5', '#E4A7C5']}
+            colors={degradeTelas.pesquisa}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.inputBackground}

@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     height:60,
     borderRadius:10,
     fontSize:30,
-    color:'#313740'
+    color:'#FFF'
   },
   containerConteudo:{
     padding:20
@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     borderColor: '#FFF',
     borderRadius: 10,
     fontSize: 20,
-    color: '#313740',
+    color: '#FFF',
     paddingHorizontal:10,
     textAlignVertical: 'top',  // Garante que o texto comece do início
   }

@@ -1,3 +1,4 @@
+import { appColors } from '@/theme/colors';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -13,7 +14,14 @@ export const styles = StyleSheet.create({
     top: 0,
     height:'100%'
   },
-  section: {
-    
+  textAnimation: {
+    textAlign:'center',
+    color:appColors.branco,
+    fontSize:20,
+    fontWeight:'bold'
+  },
+  animationContainer: {
+    justifyContent: 'center', // Garante que o conteúdo do View seja centralizado
+    alignItems: 'center', // Garante que o conteúdo do View seja centralizado
   },
 });

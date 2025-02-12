@@ -3,17 +3,21 @@ import React, { useState } from 'react';
 import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { styles } from './styles';
-import { INotas } from '@/interfaces/INota';
-import { insertNotaAsync } from '@/database/useDataBase/useNotasDataBase';
+import { editNotaAsync, } from '@/database/useDataBase/useNotasDataBase';
 import Toast from 'react-native-toast-message';
-import { useNavigation } from '@react-navigation/native';
-import { propsStack } from '@/types/navigationTypes/navigationProps';
+import { RouteProp, useNavigation } from '@react-navigation/native';
+import { propsNavigationStack, propsStack } from '@/types/navigationTypes/navigationProps';
+import { INotas } from '@/interfaces/INota';
 import { appColors } from '@/theme/colors';
 
-export function NewNote() {
+
+type EditeNoteProps = RouteProp<propsNavigationStack, 'EditNote'>;
+
+export function EditNote({ route }: { route: EditeNoteProps }) {
+    const { nota } = route.params;
     const navigation = useNavigation<propsStack>();
-    const [titleValue, setTitleValue] = useState<string>('');
-    const [contentValue, setContentValue] = useState<string>('');
+    const [titleValue, setTitleValue] = useState<string>(nota.TITLE);
+    const [contentValue, setContentValue] = useState<string>(nota.CONTENT);
 
     const onChangeTextFild = (field: string, value: string) => {
         if (field === 'Title') {
@@ -25,29 +29,27 @@ export function NewNote() {
 
     const salvarNota = async () => {
         // Verificar se os campos estão em branco
-        if (!titleValue && !contentValue) {
+        if (titleValue.length === 0 || contentValue.length === 0) {
             Alert.alert("Atenção", "Preencha todos os campos antes de salvar.");
             return
         }
-        // Monta objeto Notas
-        const data: Omit<INotas, "ID"> = {
-            TITLE: titleValue,
-            CONTENT: contentValue,
-            DATE: new Date().toISOString()
-        };
+
+        const eData : INotas = {
+            ID: nota.ID,
+            TITLE : titleValue,
+            CONTENT:contentValue,
+            DATE: nota.DATE
+        }
 
         try {
-            // Insere no banco de dados
-            await insertNotaAsync(data);
+            await editNotaAsync(eData);
 
-            // Retorna para tela inicial
             navigation.goBack();
 
-            // Mostra a mensagem de sucesso 
             Toast.show({
                 type: 'success',
                 text1: 'Sucesso!',
-                text2: 'Nota criada com sucesso. 👋',
+                text2: 'Nota Editada com sucesso. 👋',
             });
 
 
@@ -57,7 +59,7 @@ export function NewNote() {
             Toast.show({
                 type: 'error',
                 text1: 'Erro!',
-                text2: 'Não foi possível salvar a nota. ❌',
+                text2: 'Não foi possível editar a nota. ❌',
             });
         }
     };
@@ -65,23 +67,13 @@ export function NewNote() {
 
     return (
         <LinearGradient
-        colors={[
-            '#264457', '#264f66', '#235a75', '#1d6684', '#107293'
-          ]}
-            start={{ x: 0, y: 0 }} // Começa no topo
-            end={{ x: 0, y: 1 }}   // Termina na parte inferior
-            style={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                top: 0,
-                height: '100%'
-            }}
-        >
+            colors={[appColors.azulClaroMedio, appColors.azulClaro]}
+            style={styles.backGroud}>
+                
             <View style={styles.container}>
 
                 <View style={styles.titulo}>
-                    <Text style={styles.textTitulo}>Adicionar Notas</Text>
+                    <Text style={styles.textTitulo}>Editar Nota</Text>
                     <TouchableOpacity onPress={salvarNota}>
                         <FontAwesome name="save" size={30} color="#FFFFFF" />
                     </TouchableOpacity>
