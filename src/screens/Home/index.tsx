@@ -1,96 +1,30 @@
-import React, { useCallback, useState } from 'react';
-import { Alert, FlatList, Text, View } from 'react-native';
+import React, { useEffect, } from 'react';
+import { FlatList, View } from 'react-native';
 import { styles } from './styles';
 import { SearchBar } from '@/components/SearchBar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AddButtom } from '@/components/AddButton';
 import { CardNote } from '@/components/CardNote';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { propsStack } from '@/types/navigationTypes/navigationProps';
 import { INotas } from '@/interfaces/INota';
 import Toast from 'react-native-toast-message';
-import { deleteNotaAsync, selectAllNotasAsync } from '@/database/useDataBase/useNotasDataBase';;
-import LottieView from 'lottie-react-native';
-import {degradeTelas } from '@/theme/colors';
+import { degradeTelas } from '@/theme/colors';
+import { EmptyNoteAnimation } from '@/components/notasAnimation';
+import { useFilter } from '@/hooks/useFilter';
+import { useNoteData } from '@/hooks/useNotaData';
+import { useNoteActions } from '@/hooks/useNoteActions';
 
 
 export function Home() {
+  const { notas, refresh } = useNoteData();
+  const { itemSelected, editarNota, excluirNota, novaNota } = useNoteActions();
+  const { filteredData, applyFilter, updateData } = useFilter<INotas>(notas, (item, term) =>
+    item.TITLE.toLowerCase().includes(term) ||
+    item.CONTENT.toLowerCase().includes(term)
+  );
 
-  const navigation = useNavigation<propsStack>();
-
-  const [filteredData, setFilteredData] = useState<INotas[]>([]);
-  const [notas, setNotas] = useState<INotas[]>([]);
-
-  // Função para filtrar notas
-  const filterData = (termo: string) => {
-    if (!termo) {
-      setFilteredData(notas);
-    } else {
-      const dataFiltrada = notas.filter(
-        (nota) =>
-          nota.TITLE.toLowerCase().includes(termo.toLowerCase().trim()) ||
-          nota.CONTENT.toLowerCase().includes(termo.toLowerCase().trim())
-      );
-      setFilteredData(dataFiltrada);
-    }
-  };
-
-  //Função para selecionar item
-  const itemSelected = (item: INotas) => {
-    navigation.navigate('NoteDetails', { nota: item })
-  };
-
-  // Função para excluir nota
-  const excluirNota = async (item: INotas) => {
-    Alert.alert(
-      'Atenção',
-      'Deseja excluir essa Nota ?',
-      [
-        {
-          text: "Cancelar",
-          style: 'cancel'
-        },
-
-        {
-          text: "Sim",
-          onPress: async () => {
-            await deleteNotaAsync(item.ID);
-            setFilteredData(filteredData.filter((prevItem) => prevItem.ID !== item.ID))
-            setNotas(notas.filter((prevItem) => prevItem.ID !== item.ID))
-          },
-          style: 'destructive'
-        }
-      ],
-      { cancelable: true }
-
-    )
-  };
-
-  //Função para editar
-  const editarNota = (item: INotas) => {
-    navigation.navigate('EditNote', { nota: item });
-  }
-
-  // CallBack de atualizar lista de Notas.
-  useFocusEffect(
-    useCallback(() => {
-      const carregarDados = async () => {
-        try {
-          const notas = await selectAllNotasAsync();
-          console.log(notas)
-          if (notas) {
-            setNotas(notas)
-            setFilteredData(notas)
-          }
-        } catch (erro) {
-          console.error(erro);
-        }
-      };
-
-      carregarDados();
-      
-    }, [])
-  )
+  useEffect(() => {
+    updateData(notas);
+  }, [notas])
 
   return (
 
@@ -100,23 +34,12 @@ export function Home() {
     >
       <View style={styles.container}>
 
-        <SearchBar acao={filterData} />
+        <SearchBar acao={applyFilter} />
 
-        {notas.length === 0 &&
-          (
+        {notas.length === 0 && <EmptyNoteAnimation />}
 
-            <View style={styles.animationContainer}>
-              <LottieView
-                source={require('@/assets/animations/emptyNote.json')}
-                autoPlay={true}
-                loop={false}
-                style={{ width: 250, height: 250 }}
-              />
-              <Text style={styles.textAnimation}>Adicione a sua primeira nota!</Text>
-            </View>
-          )
 
-        }
+
         <FlatList
           data={filteredData}
           keyExtractor={(item) => item.ID.toString()}
@@ -124,16 +47,17 @@ export function Home() {
             <CardNote
               item={item}
               onSelect={itemSelected}
-              onDelete={excluirNota}
+              onDelete={() => excluirNota(item, refresh)}
               onEdit={editarNota}
             />}
           numColumns={2}
           horizontal={false}
-          contentContainerStyle={{ marginBottom: 20, paddingHorizontal: 10, paddingBottom: 80 }}
-          showsVerticalScrollIndicator={false} />
+          contentContainerStyle={{ marginBottom: 20, paddingHorizontal: 10, paddingBottom: 80, gap: 10 }}
+          showsVerticalScrollIndicator={false}
+        />
 
 
-        <AddButtom action={() => navigation.navigate('NewNote')} />
+        <AddButtom action={novaNota} />
       </View>
       <Toast />
     </LinearGradient>

@@ -4,22 +4,22 @@ import { FontAwesome } from "@expo/vector-icons"
 import { LinearGradient } from 'expo-linear-gradient';
 import { degradeTelas } from '@/theme/colors';
 import { useFocusEffect } from '@react-navigation/native';
-export function SearchBar({acao}:{acao:(termo: string) => void}) {
-    const [textoD,setTextoD] = useState('');
+export function SearchBar({ acao }: { acao: (termo: string) => void }) {
+    const [textoD, setTextoD] = useState('');
 
-    const onChangText = (value:string) =>{
+    const onChangText = (value: string) => {
         setTextoD(value)
         acao(value);
     };
 
     useFocusEffect(
         useCallback(() => {
-          const reset = () => {
-           setTextoD('')
-          };
-          reset();
+            const reset = () => {
+                setTextoD('')
+            };
+            reset();
         }, [])
-      )
+    )
 
     return (
         <LinearGradient
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 50,
         margin: 10,
-        elevation: 5, 
+        elevation: 5,
     },
     inputContainer: {
         flexDirection: 'row',
@@ -63,15 +63,15 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         padding: 10,
         width: '100%',
-        elevation: 5, 
-        shadowColor: '#000', 
-        shadowOffset: { width: 0, height: 4 }, 
-        shadowOpacity: 0.1, 
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
     },
     textInput: {
         flex: 1,
         height: 40,
-        color: '#fff', 
+        color: '#fff',
         fontSize: 16,
     },
 });

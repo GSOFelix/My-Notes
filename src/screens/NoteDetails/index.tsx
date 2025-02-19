@@ -11,8 +11,6 @@ type NotaDetalhe = RouteProp<propsNavigationStack, 'NoteDetails'>;
 
 export function NoteDetails({ route }: { route: NotaDetalhe }) {
     const { nota } = route.params;
-    const [titleValue, setTileValue] = useState<string>(nota.TITLE);
-    const [contentValue, setContentValue] = useState<string>(nota.CONTENT);
 
     return (
         <LinearGradient
@@ -28,8 +26,8 @@ export function NoteDetails({ route }: { route: NotaDetalhe }) {
                 <View style={styles.containerTitulo}>
                     <TextInput
                         style={styles.inputTitulo}
-                        value={titleValue}
-                        readOnly={true}/>
+                        value={nota.TITLE}
+                        readOnly={true} />
                 </View>
 
                 <View style={styles.containerConteudo}>
@@ -37,7 +35,7 @@ export function NoteDetails({ route }: { route: NotaDetalhe }) {
                         <Text
                             style={styles.inputConteudo}
                             selectable={true}
-                        >{contentValue}
+                        >{nota.CONTENT}
                         </Text>
                     </ScrollView>
                 </View>

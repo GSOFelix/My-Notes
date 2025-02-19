@@ -8,6 +8,7 @@ import { propsNavigationStack } from "@/types/navigationTypes/navigationProps";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { SQLiteProvider } from "expo-sqlite";
+import { BottoTabsNavigation } from "./BottoTabsNavigation";
 
 const Stack = createStackNavigator<propsNavigationStack>();
 
@@ -15,11 +16,12 @@ export function Routes() {
     return (
         <NavigationContainer >
             <SQLiteProvider databaseName={DB_NAME} onInit={InitializeDataBase}>
-                <Stack.Navigator initialRouteName="Home"
+                <Stack.Navigator initialRouteName="Tabs"
                     screenOptions={{
                         headerShown: false,
                         ...TransitionPresets.FadeFromBottomAndroid
                     }}>
+                    <Stack.Screen name="Tabs" component={BottoTabsNavigation}/>
                     <Stack.Screen name="Home" component={Home} />
                     <Stack.Screen name="NewNote" component={NewNote} />
                     <Stack.Screen name="NoteDetails" component={NoteDetails} />
