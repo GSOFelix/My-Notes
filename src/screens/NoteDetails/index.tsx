@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView, Text, TextInput, View } from 'react-native';
 import { styles } from './style';
 import { RouteProp } from '@react-navigation/native';
 import { propsNavigationStack } from '@/types/navigationTypes/navigationProps';
 import { LinearGradient } from 'expo-linear-gradient';
 import { formatarData } from '@/Utils/formateDate';
-import { appColors, degradeTelas } from '@/theme/colors';
+import { degradeTelas } from '@/theme/colors';
 
 type NotaDetalhe = RouteProp<propsNavigationStack, 'NoteDetails'>;
 
@@ -13,33 +13,30 @@ export function NoteDetails({ route }: { route: NotaDetalhe }) {
     const { nota } = route.params;
 
     return (
-        <LinearGradient
-            colors={degradeTelas.selecionarNota}
-            style={styles.backgroud}>
-
+        <LinearGradient colors={degradeTelas.selecionarNota} style={styles.background}>
             <View style={styles.container}>
-
-                <View style={styles.titulo}>
-                    <Text style={styles.textTitulo}>Data Criação: {formatarData(nota.DATE)} </Text>
+                {/* Data de criação */}
+                <View style={styles.header}>
+                    <Text style={styles.textHeader}>Criado em: {formatarData(nota.DATE)}</Text>
                 </View>
 
-                <View style={styles.containerTitulo}>
+                {/* Título */}
+                <View style={styles.titleContainer}>
                     <TextInput
-                        style={styles.inputTitulo}
+                        style={styles.inputTitle}
                         value={nota.TITLE}
-                        readOnly={true} />
+                        editable={false}
+                    />
                 </View>
 
-                <View style={styles.containerConteudo}>
-                    <ScrollView style={styles.scroller} showsVerticalScrollIndicator={false}>
+                {/* Conteúdo */}
+                <View style={styles.contentContainer}>
+                    <ScrollView contentContainerStyle={styles.scrollContainer}>
                         <Text
-                            style={styles.inputConteudo}
-                            selectable={true}
-                        >{nota.CONTENT}
-                        </Text>
+                            style={styles.inputContent}
+                            selectable={true}>{nota.CONTENT}</Text>
                     </ScrollView>
                 </View>
-
             </View>
         </LinearGradient>
     );

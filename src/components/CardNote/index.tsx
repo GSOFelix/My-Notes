@@ -1,16 +1,17 @@
 import { INotas } from '@/interfaces/INota';
 import { appColors, degradeTelas } from '@/theme/colors';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export function CardNote({ item, onSelect, onDelete, onEdit }
+export function CardNote({ item, onSelect, onDelete, onEdit,onShare }
   : {
     item: INotas,
     onSelect: (item: INotas) => void,
     onDelete: (item: INotas) => void,
-    onEdit: (item: INotas) => void
+    onEdit: (item: INotas) => void,
+    onShare: (item: INotas) => void,
   }) {
 
   return (
@@ -20,6 +21,10 @@ export function CardNote({ item, onSelect, onDelete, onEdit }
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={{backgroundColor:'gray',borderRadius:25,padding:5}} onPress={() => onEdit(item)}>
           <Feather name="edit-3" size={20} color="#fff" />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={{backgroundColor:'gray',borderRadius:25,padding:5}} onPress={() => onShare(item)}>
+        <Entypo name="share" size={24} color="#FFF" />
         </TouchableOpacity>
 
         <TouchableOpacity style={{backgroundColor:'gray',borderRadius:25,padding:5}} onPress={() => onDelete(item)}>
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
     padding: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 10,
-    marginBottom: 15,
+    gap: 15,
+    marginBottom: 20,
   },
 });

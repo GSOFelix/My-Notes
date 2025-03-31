@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    padding: 20,
   },
   backGroud: {
     position: 'absolute',
@@ -15,15 +16,15 @@ export const styles = StyleSheet.create({
     marginTop: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 20,
   },
   textTitulo: {
     fontSize: 30,
     color: '#FFFF'
   },
   containerTitulo: {
-    padding: 20
+    marginBottom: 20,
   },
   inputTitulo: {
     borderWidth: 2,
@@ -31,19 +32,36 @@ export const styles = StyleSheet.create({
     height: 60,
     borderRadius: 10,
     fontSize: 30,
-    color: '#313740'
+    color: '#FFF',
+    paddingHorizontal: 10
   },
   containerConteudo: {
     padding: 20
   },
   inputConteudo: {
-    height: '85%',
+    minHeight: 150, 
+    maxHeight: '100%', 
     borderWidth: 2,
     borderColor: '#FFF',
     borderRadius: 10,
     fontSize: 20,
-    color: '#313740',
+    color: '#FFF',
     paddingHorizontal: 10,
-    textAlignVertical: 'top',  // Garante que o texto comece do início
-  }
+    textAlignVertical: 'top',
+  },
+  contentContainer: {
+    flex: 1,
+    borderWidth: 2,
+    borderColor: '#FFF',
+    borderRadius: 10,
+    padding: 6,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  inputContent: {
+    fontSize: 18,
+    color: '#FFF',
+
+  },
 });

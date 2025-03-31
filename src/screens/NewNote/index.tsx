@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -44,15 +44,19 @@ export function NewNote() {
                     />
                 </View>
 
-                <View style={styles.containerConteudo}>
-                    <TextInput
-                        style={styles.inputConteudo}
-                        placeholder='Digite sua nota'
-                        multiline={true}
-                        value={contentValue}
-                        onChangeText={setContentValue}
-                    />
+                {/* Conteúdo */}
+                <View style={styles.contentContainer}>
+                    <ScrollView contentContainerStyle={styles.scrollContainer}>
+                        <TextInput
+                            style={styles.inputContent}
+                            placeholder='Digite sua nota'
+                            multiline={true}
+                            value={contentValue}
+                            onChangeText={setContentValue}
+                        />
+                    </ScrollView>
                 </View>
+
 
             </View>
 

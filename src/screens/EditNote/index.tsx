@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
-import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { styles } from './styles';
 import { editNotaAsync, } from '@/database/useDataBase/useNotasDataBase';
@@ -8,7 +8,6 @@ import Toast from 'react-native-toast-message';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { propsNavigationStack, propsStack } from '@/types/navigationTypes/navigationProps';
 import { INotas } from '@/interfaces/INota';
-import { appColors } from '@/theme/colors';
 
 
 type EditeNoteProps = RouteProp<propsNavigationStack, 'EditNote'>;
@@ -34,10 +33,10 @@ export function EditNote({ route }: { route: EditeNoteProps }) {
             return
         }
 
-        const eData : INotas = {
+        const eData: INotas = {
             ID: nota.ID,
-            TITLE : titleValue,
-            CONTENT:contentValue,
+            TITLE: titleValue,
+            CONTENT: contentValue,
             DATE: nota.DATE
         }
 
@@ -67,10 +66,11 @@ export function EditNote({ route }: { route: EditeNoteProps }) {
 
     return (
         <LinearGradient
-            colors={[appColors.azulClaroMedio, appColors.azulClaro]}
+            colors={['#264457', '#264f66', '#235a75', '#1d6684', '#107293']}
             style={styles.backGroud}>
-                
-            <View style={styles.container}>
+
+            <View
+                style={styles.container}>
 
                 <View style={styles.titulo}>
                     <Text style={styles.textTitulo}>Editar Nota</Text>
@@ -82,24 +82,28 @@ export function EditNote({ route }: { route: EditeNoteProps }) {
                 <View style={styles.containerTitulo}>
                     <TextInput
                         style={styles.inputTitulo}
-                        placeholder='Titulo da Nota'
+                        placeholder='Título da Nota'
                         value={titleValue}
                         onChangeText={(value: string) => onChangeTextFild("Title", value)}
                     />
                 </View>
 
-                <View style={styles.containerConteudo}>
-                    <TextInput
-                        style={styles.inputConteudo}
-                        placeholder='Digite sua nota'
-                        multiline={true}
-                        value={contentValue}
-                        onChangeText={(value: string) => onChangeTextFild("Content", value)}
-                    />
+
+                {/* Conteúdo */}
+                <View style={styles.contentContainer}>
+                    <ScrollView contentContainerStyle={styles.scrollContainer}>
+                        <TextInput
+                            style={styles.inputContent}
+                            placeholder='Digite sua nota'
+                            multiline
+                            scrollEnabled={true}
+                            value={contentValue}
+                            onChangeText={(value: string) => onChangeTextFild("Content", value)}
+                        />
+                    </ScrollView>
                 </View>
 
             </View>
-
         </LinearGradient>
     );
 };

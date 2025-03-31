@@ -1,28 +1,37 @@
 {
   "expo": {
-    "name": "my-notes",
+    "name": "My Notes",
     "slug": "my-notes",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/LogoMyNotes.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/LogoMyNotes.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#16838E"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/adaptive-icon-foreground.png",
+        "backgroundColor": "#16838E"
+      },
+      "navigationBar": {
+        "backgroundColor": "#000"
+      },
+      "package": "com.guifelixx.mynotes"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2991b771-0b32-4a25-96d9-10421b04d395"
+      }
     }
   }
 }

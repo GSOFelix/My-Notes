@@ -16,7 +16,7 @@ export function Routes() {
     return (
         <NavigationContainer >
             <SQLiteProvider databaseName={DB_NAME} onInit={InitializeDataBase}>
-                <Stack.Navigator initialRouteName="Tabs"
+                <Stack.Navigator initialRouteName="Home"
                     screenOptions={{
                         headerShown: false,
                         ...TransitionPresets.FadeFromBottomAndroid

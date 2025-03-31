@@ -1,54 +1,47 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
   container: {
-    flex: 1
-  },
-  backgroud: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%'
-  },
-  titulo: {
-    marginTop: 50,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flex: 1,
     padding: 20,
-    alignItems: 'center'
   },
-  textTitulo: {
-    fontSize: 20,
-    color: '#FFFF'
+  header: {
+    marginTop: 50,
+    marginBottom: 20,
   },
-
-  containerTitulo: {
-    padding: 20
+  textHeader: {
+    fontSize: 18,
+    color: '#FFF',
+    fontWeight: 'bold',
   },
-  inputTitulo: {
-    borderWidth: 2,
-    borderColor: '#FFF',
-    height: 60,
-    borderRadius: 10,
-    fontSize: 30,
-    color: '#FFF'
+  titleContainer: {
+    marginBottom: 20,
   },
-  containerConteudo: {
-    padding: 20
-  },
-  scroller: {
-    height: '75%',
+  inputTitle: {
     borderWidth: 2,
     borderColor: '#FFF',
     borderRadius: 10,
-  },
-  inputConteudo: {
-    fontSize: 20,
-    padding: 10,
-    paddingBottom: 12,
+    fontSize: 22,
     color: '#FFF',
     paddingHorizontal: 10,
-    textAlignVertical: 'top',  // Garante que o texto comece do início
-  }
+    paddingVertical: 5,
+  },
+  contentContainer: {
+    flex: 1,
+    borderWidth: 2,
+    borderColor: '#FFF',
+    borderRadius: 10,
+    padding: 10,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  inputContent: {
+    fontSize: 18,
+    color: '#FFF',
+    textAlignVertical: 'top',
+  },
 });

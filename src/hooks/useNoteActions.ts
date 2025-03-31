@@ -1,9 +1,10 @@
+import { Alert, Share } from "react-native";
 import { deleteNotaAsync, insertNotaAsync } from "@/database/useDataBase/useNotasDataBase";
 import { INotas } from "@/interfaces/INota";
 import { propsStack } from "@/types/navigationTypes/navigationProps";
+import { formatarData } from "@/Utils/formateDate";
 import { useNavigation } from "@react-navigation/native"
 import { useState } from "react";
-import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
 
 export const useNoteActions = () => {
@@ -91,6 +92,27 @@ export const useNoteActions = () => {
         }
     };
 
+
+    // Função para compartilhar nota;
+    const compartilharNota = (item: INotas) => {
+        try {
+            const message = `📅 ${formatarData(item.DATE)}\n📌 ${item.TITLE}\n${item.CONTENT.trim()}`;
+            Share.share({
+                message,
+                title: item.TITLE
+            });
+        } catch (error) {
+            console.error("Erro ao compartilhar nota: ", error);
+            Toast.show({
+                type: 'error',
+                text1: 'Erro!',
+                text2: 'Não foi possível compartilhar a nota. ❌',
+            });
+        }
+
+    }
+
+
     return {
         itemSelected,
         editarNota,
@@ -100,6 +122,7 @@ export const useNoteActions = () => {
         titleValue,
         setTitleValue,
         contentValue,
-        setContentValue
+        setContentValue,
+        compartilharNota
     }
 }

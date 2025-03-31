@@ -16,7 +16,7 @@ import { useNoteActions } from '@/hooks/useNoteActions';
 
 export function Home() {
   const { notas, refresh } = useNoteData();
-  const { itemSelected, editarNota, excluirNota, novaNota } = useNoteActions();
+  const { itemSelected, editarNota, excluirNota, novaNota, compartilharNota } = useNoteActions();
   const { filteredData, applyFilter, updateData } = useFilter<INotas>(notas, (item, term) =>
     item.TITLE.toLowerCase().includes(term) ||
     item.CONTENT.toLowerCase().includes(term)
@@ -33,11 +33,11 @@ export function Home() {
       style={styles.background}
     >
       <View style={styles.container}>
-
-        <SearchBar acao={applyFilter} />
+        <View style={{paddingBottom: 15}}>
+          <SearchBar acao={applyFilter} />
+        </View>
 
         {notas.length === 0 && <EmptyNoteAnimation />}
-
 
 
         <FlatList
@@ -49,6 +49,7 @@ export function Home() {
               onSelect={itemSelected}
               onDelete={() => excluirNota(item, refresh)}
               onEdit={editarNota}
+              onShare={() => compartilharNota(item)}
             />}
           numColumns={2}
           horizontal={false}
