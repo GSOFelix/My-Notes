@@ -48,7 +48,7 @@ export function EditNote({ route }: { route: EditeNoteProps }) {
             Toast.show({
                 type: 'success',
                 text1: 'Sucesso!',
-                text2: 'Nota Editada com sucesso. 👋',
+                text2: 'Nota Editada com sucesso. 👋',               
             });
 
 
